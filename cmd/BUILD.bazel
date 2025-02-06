@@ -1,0 +1,49 @@
+load("@rules_go//go:def.bzl", "go_binary", "go_cross_binary", "go_library")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_load")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+
+go_library(
+    name = "cmd_lib",
+    srcs = ["main.go"],
+    importpath = "github.com/taitasu555/bazel-starter-golang/cmd",
+    visibility = ["//visibility:private"],
+    deps = [
+        "//pkg/string",
+        "@com_github_google_uuid//:uuid",
+    ],
+)
+
+go_binary(
+    name = "cmd",
+    embed = [":cmd_lib"],
+    visibility = ["//visibility:public"],
+)
+
+go_cross_binary(
+    name = "cmd_linux_amd64",
+    platform = "@rules_go//go/toolchain:linux_amd64",
+    target = ":cmd",
+)
+
+
+# tarに固める
+pkg_tar(
+    name = "pkg",
+    srcs = [":cmd_linux_amd64"],
+)
+
+#手元のDockerでこのイメージを動かせるよう、イメージのロードを追加します。
+oci_load(
+    name = "image_amd64_load",
+    image = ":image_amd64",
+    repo_tags = ["cmd:latest"],
+)
+
+oci_image(
+    name = "image_amd64",
+    # architecture = "amd64",
+    base = "@distroless_static_debian12_linux_amd64",
+    entrypoint = ["/cmd_linux_amd64"],
+    # os = "linux",
+    tars = [":pkg"],
+)

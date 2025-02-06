@@ -1,0 +1,22 @@
+load("@gazelle//:def.bzl", "gazelle")
+load("@rules_go//go:def.bzl", "TOOLS_NOGO", "nogo")
+
+# gazelle:prefix github.com/taitasu555/bazel-starter-golang
+gazelle(name = "gazelle")
+
+# gazelleにgo modから依存関係を認識させるショートカットコマンドを登録
+gazelle(
+    name = "update-go-repos",
+    args = [
+        "-from_file=go.mod",
+        "-bzlmod",
+        "-prune",
+    ],
+    command = "update-repos",
+)
+
+nogo(
+    name = "my_nogo",
+    visibility = ["//visibility:public"],
+    deps = TOOLS_NOGO,
+)

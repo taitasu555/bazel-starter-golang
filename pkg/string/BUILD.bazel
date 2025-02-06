@@ -1,0 +1,23 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "string",
+    srcs = ["string.go"],
+    importpath = "github.com/taitasu555/bazel-starter-golang/pkg/string",
+    visibility = ["//visibility:public"],
+)
+
+go_test(
+    name = "string_test",
+    srcs = ["string_test.go"],
+    data = glob(["testdata/**"]),
+    embedsrcs = [
+        "testdata/empty_string_input.txt",
+        "testdata/empty_string_output.txt",
+        "testdata/multiple_string_input.txt",
+        "testdata/multiple_string_output.txt",
+        "testdata/single_string_input.txt",
+        "testdata/single_string_output.txt",
+    ],
+    deps = [":string"],
+)
