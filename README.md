@@ -25,6 +25,7 @@ bazel run //:gazelle
 bazel mod tidy
 ```
 <br>
+
 ### Go Modules の依存関係整理
 - Go プロジェクト内で、Go Modules の依存関係情報を最新状態に保ちたいとき
 - 例えば、コードを変更して利用するライブラリが変わった場合など、go.mod を自動整備するために実行する
@@ -46,7 +47,7 @@ bazel run //:update-go-repos
 <br>
 
 
-## Dockerを利用したdebug
+## Build, Dockerについて
 
 ### Imageを作成する
 ```
