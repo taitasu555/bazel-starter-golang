@@ -59,7 +59,8 @@ bazel run //:update-go-repos
 docker run --rm cmd:latest
 ```
 
-**macで動かすため下記設定をcmd/BUILD.bazel二追加
+## その他
+macで動かすため下記設定をcmd/BUILD.bazelに追加
 ```
 go_cross_binary(
     name = "cmd_linux_amd64",
