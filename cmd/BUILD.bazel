@@ -25,7 +25,6 @@ go_cross_binary(
     target = ":cmd",
 )
 
-
 # tarに固める
 pkg_tar(
     name = "pkg",

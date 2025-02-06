@@ -42,5 +42,3 @@ oci.pull(
     tag = "nonroot",
 )
 use_repo(oci, "distroless_static_debian12", "distroless_static_debian12_linux_amd64", "distroless_static_debian12_linux_arm64_v8")
-
-bazel_dep(name = "toolchains_protoc", version = "0.3.3")
